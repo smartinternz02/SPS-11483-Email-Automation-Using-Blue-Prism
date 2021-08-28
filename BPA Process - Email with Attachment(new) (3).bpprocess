@@ -1,0 +1,210 @@
+﻿<process name="Email with Attachment" version="1.0" bpversion="6.10.2.42081" narrative="Building a bot to automatiocally sent emails with attachments to a list of people." byrefcollection="true" preferredid="10a50de4-7652-4a48-80fe-ed25dca32c0b">
+  <view>
+    <camerax>-63</camerax>
+    <cameray>131</cameray>
+    <zoom version="2">1.25</zoom>
+  </view>
+  <preconditions />
+  <endpoint narrative="" />
+  <stage stageid="286bf8a5-f899-41c4-8e6f-19935ee14908" name="Start" type="Start">
+    <display x="-615" y="-120" w="90" h="60" />
+    <onsuccess>06fe932a-2b16-4d72-9ab1-cd5d925c396c</onsuccess>
+  </stage>
+  <stage stageid="8b353270-7d41-4ec6-90d5-4aed0d3567ca" name="End" type="End">
+    <display x="-135" y="330" w="60" h="60" />
+  </stage>
+  <stage stageid="874863db-6e87-44b4-861a-0e4b63c042a4" name="Stage1" type="ProcessInfo">
+    <display x="-645" y="60" w="150" h="90" />
+  </stage>
+  <stage stageid="06fe932a-2b16-4d72-9ab1-cd5d925c396c" name="MS Excel VBO::Create Instance" type="Action">
+    <loginhibit onsuccess="true" />
+    <display x="-465" y="-120" w="60" h="60" />
+    <inputs>
+      <input type="flag" name="Enable Events" friendlyname="Enable Events" narrative="Flag to indicate that events should be enabled / disabled on the attached instance - defaulted to True" expr="" />
+    </inputs>
+    <outputs>
+      <output type="number" name="handle" friendlyname="handle" narrative="An integer which can be used to identify the created instance in subsequent actions" stage="handle" />
+    </outputs>
+    <onsuccess>49bd993c-2be9-477f-bd0e-7de7930b3d86</onsuccess>
+    <resource object="MS Excel VBO" action="Create Instance" />
+  </stage>
+  <stage stageid="d46b8fd6-178f-43a1-b1f2-2e8bdc8ca45b" name="handle" type="Data">
+    <loginhibit onsuccess="true" />
+    <display x="315" y="-75" />
+    <datatype>number</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="49bd993c-2be9-477f-bd0e-7de7930b3d86" name="MS Excel VBO::Open Workbook" type="Action">
+    <loginhibit onsuccess="true" />
+    <display x="-465" y="-15" w="60" h="60" />
+    <inputs>
+      <input type="number" name="handle" friendlyname="handle" narrative="The integer handle identifying the instance on which the required workbook should be opened. The default of zero indicates the currently active instance." expr="[handle]" />
+      <input type="text" name="File name" friendlyname="File name" narrative="The path and name of the file which should be opened." expr="&quot;C:\Users\Siddartha\Downloads\Book1.xlsx&quot;" />
+    </inputs>
+    <outputs>
+      <output type="text" name="Workbook Name" friendlyname="Workbook Name" narrative="The name used by Excel to identify the workbook - usually this is the file name (without the path)." stage="Workbook name" />
+    </outputs>
+    <onsuccess>b4c63bba-dc28-45dc-b5f4-108db7294b94</onsuccess>
+    <resource object="MS Excel VBO" action="Open Workbook" />
+  </stage>
+  <stage stageid="c441c3e2-8449-4ec1-8a6a-4f96c1281e74" name="Workbook name" type="Data">
+    <loginhibit onsuccess="true" />
+    <display x="450" y="-75" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="a8c74a53-afbf-433e-8e46-69fbaf84b713" name="Data" type="Collection">
+    <display x="480" y="60" w="120" h="90" />
+    <datatype>collection</datatype>
+    <private />
+    <alwaysinit />
+    <collectioninfo>
+      <field name="Name" type="text" />
+      <field name="Email" type="text" />
+    </collectioninfo>
+    <initialvalue>
+      <row>
+        <field name="Name" type="text" value="" />
+        <field name="Email" type="text" value="" />
+      </row>
+    </initialvalue>
+  </stage>
+  <stage stageid="9d72d346-9343-48ea-a202-f183c41d72e9" name="MS Excel VBO::Close Instance" type="Action">
+    <loginhibit onsuccess="true" />
+    <display x="-330" y="-120" w="60" h="60" />
+    <inputs>
+      <input type="number" name="handle" friendlyname="handle" narrative="The integer handle identifying the instance to be closed. Zero indicates the currently active instance." expr="[handle]" />
+      <input type="flag" name="Save Changes" friendlyname="Save Changes" narrative="True to save the changes to the open workbooks on the instance, False to discard any changes. Default is False." expr="" />
+    </inputs>
+    <onsuccess>57bf0955-3c2d-4cfa-b145-3a21159ea01b</onsuccess>
+    <resource object="MS Excel VBO" action="Close Instance" />
+  </stage>
+  <stage stageid="a08f7ac0-ee27-4057-babd-6304115cf625" name="Email" type="Data">
+    <loginhibit onsuccess="true" />
+    <display x="300" y="195" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">machampallishravani@gmail.com</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="4a9c74ba-c096-4b6b-b8e2-eb2f2a61e3b2" name="Password" type="Data">
+    <loginhibit onsuccess="true" />
+    <display x="465" y="195" />
+    <datatype>password</datatype>
+    <initialvalueenc>120,70,64,7,93,13,71,86,119,68</initialvalueenc>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="57bf0955-3c2d-4cfa-b145-3a21159ea01b" name="Email - POP3/SMTP::Configure" type="Action">
+    <loginhibit onsuccess="true" />
+    <display x="-135" y="-120" w="90" h="60" />
+    <inputs>
+      <input type="text" name="Username" friendlyname="Username" narrative="The POP3 and SMTP Username" expr="[Email]" />
+      <input type="password" name="Password" friendlyname="Password" narrative="The POP3 and SMTP Password" expr="[Password]" />
+      <input type="text" name="POP3 Server" friendlyname="POP3 Server" narrative="The POP3 Server address e.g. pop.domain.com" expr="&quot;pop.gmail.com&quot;" />
+      <input type="text" name="SMTP Server" friendlyname="SMTP Server" narrative="The SMTP Server address e.g. smtp.domain.com" expr="&quot;smtp.gmail.com&quot;" />
+      <input type="number" name="POP3 Port" friendlyname="POP3 Port" narrative="The POP3 Port, e.g. 110 or 995" expr="995" />
+      <input type="number" name="SMTP Port" friendlyname="SMTP Port" narrative="The SMTP Port, e.g 25 or 465" expr="587" />
+      <input type="flag" name="POP3 UseSSL" friendlyname="POP3 UseSSL" narrative="Whether to use SSL for POP3" expr="True" />
+      <input type="flag" name="SMTP UseSSL" friendlyname="SMTP UseSSL" narrative="Whether to use SSL for SMTP" expr="True" />
+    </inputs>
+    <onsuccess>d2026047-e1b6-44e5-a7cd-c5ef83f973bc</onsuccess>
+    <resource object="Email - POP3/SMTP" action="Configure" />
+  </stage>
+  <stage stageid="d2026047-e1b6-44e5-a7cd-c5ef83f973bc" name="Loop Start1" type="LoopStart">
+    <loginhibit onsuccess="true" />
+    <display x="-135" y="-30" />
+    <onsuccess>842aba86-a16c-4d2c-9432-3f83cbfe8476</onsuccess>
+    <groupid>a1342f7b-9f5f-4ca9-be18-bfbbc593c5ef</groupid>
+    <looptype>ForEach</looptype>
+    <loopdata>Data</loopdata>
+  </stage>
+  <stage stageid="05fce2d3-3490-4bb7-8a4b-fb0f0a5bdfb1" name="Loop End1" type="LoopEnd">
+    <loginhibit onsuccess="true" />
+    <display x="-135" y="240" />
+    <onsuccess>8b353270-7d41-4ec6-90d5-4aed0d3567ca</onsuccess>
+    <groupid>a1342f7b-9f5f-4ca9-be18-bfbbc593c5ef</groupid>
+  </stage>
+  <stage stageid="d297112e-eb97-4a08-a866-a61559c0f0ac" name="Count" type="Data">
+    <loginhibit onsuccess="true" />
+    <display x="300" y="315" w="90" h="30" />
+    <datatype>number</datatype>
+    <initialvalue>1</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="7b3f3fc3-7bd4-495b-a30f-c57617f0823b" name="Attachment" type="Collection">
+    <display x="285" y="60" w="150" h="90" />
+    <datatype>collection</datatype>
+    <private />
+    <alwaysinit />
+    <collectioninfo>
+      <field name="Path" type="text" />
+    </collectioninfo>
+    <initialvalue>
+      <row>
+        <field name="Path" type="text" value="" />
+      </row>
+    </initialvalue>
+  </stage>
+  <stage stageid="842aba86-a16c-4d2c-9432-3f83cbfe8476" name="Multi1" type="MultipleCalculation">
+    <loginhibit onsuccess="true" />
+    <display x="-135" y="60" w="90" h="60" />
+    <onsuccess>c0b3b7b7-496c-48d9-8732-918270e32856</onsuccess>
+    <steps>
+      <calculation expression="[Path]&amp;[Count]&amp;&quot;.jpg&quot;" stage="Attachment.Path" />
+      <calculation expression="[Count]+1" stage="Count" />
+    </steps>
+  </stage>
+  <stage stageid="c0b3b7b7-496c-48d9-8732-918270e32856" name="Email - POP3/SMTP::Send Message" type="Action">
+    <loginhibit onsuccess="true" />
+    <display x="-135" y="150" w="90" h="60" />
+    <inputs>
+      <input type="text" name="From" friendlyname="From" narrative="The email address of the sender." expr="[Email]" />
+      <input type="text" name="To" friendlyname="To" narrative="The email address of the recipient. To address multiple recipients use the format &quot;john.smith@example.com, henry.jones@example.com&quot; OR &quot;John Smith &lt;john.smith@example.com&gt;, Henry Jones &lt;henry.jones@example.com&gt;&quot;." expr="[Data.Email]" />
+      <input type="text" name="Subject" friendlyname="Subject" narrative="The subject of the email." expr="&quot;Email automation&quot;" />
+      <input type="text" name="Body" friendlyname="Body" narrative="The body of the email." expr="&quot;Images given&quot;" />
+      <input type="collection" name="Attachments" friendlyname="Attachments" narrative="A Collection containing a list of files to add to the email as attachments." expr="[Attachment]" />
+      <input type="flag" name="BodyIsHTML" friendlyname="BodyIsHTML" narrative="Indicates if the body should be sent as HTML" expr="True" />
+    </inputs>
+    <onsuccess>05fce2d3-3490-4bb7-8a4b-fb0f0a5bdfb1</onsuccess>
+    <resource object="Email - POP3/SMTP" action="Send Message" />
+  </stage>
+  <stage stageid="b4c63bba-dc28-45dc-b5f4-108db7294b94" name="MS Excel VBO::Get Worksheet As Collection" type="Action">
+    <loginhibit onsuccess="true" />
+    <display x="-330" y="-15" w="90" h="60" />
+    <inputs>
+      <input type="number" name="handle" friendlyname="handle" narrative="The integer handle identifying the instance on which the worksheet which should be retrieved resides. The default of zero indicates the currently active instance." expr="[handle]" />
+      <input type="text" name="Workbook Name" friendlyname="Workbook Name" narrative="The name of the workbook which contains the sheet required. The default empty text indicates the currently active workbook on the specified instance." expr="[Workbook name]" />
+      <input type="text" name="Worksheet Name" friendlyname="Worksheet Name" narrative="The name of the worksheet within the specified workbook which should be written to a collection. The default empty text indicates the currently active worksheet within the specified workbook." expr="&quot;Sheet1&quot;" />
+      <input type="text" name="Fetch Data With Method" friendlyname="Fetch Data With Method" narrative="The method used to fetch data from cells in the worksheet. Options include Text, Value, and Value2. The default indicates Value will be used." expr="" />
+    </inputs>
+    <outputs>
+      <output type="collection" name="Data" friendlyname="Data" narrative="The collection containing the data from the specified worksheet - the column IDs will be gleaned from the first row on the sheet being retrieved." stage="Data" />
+    </outputs>
+    <onsuccess>9d72d346-9343-48ea-a202-f183c41d72e9</onsuccess>
+    <resource object="MS Excel VBO" action="Get Worksheet As Collection" />
+  </stage>
+  <stage stageid="8135d5b4-217b-415b-986e-08e31313ce23" name="Workbook" type="Block">
+    <loginhibit onsuccess="true" />
+    <display x="270" y="-120" w="240" h="90" />
+    <font family="Segoe UI" size="10" style="Regular" color="7FB2E5" />
+  </stage>
+  <stage stageid="577261d5-f9c0-4eef-8dd0-1e9722826fa0" name="Credentails" type="Block">
+    <loginhibit onsuccess="true" />
+    <display x="240" y="165" w="300" h="90" />
+    <font family="Segoe UI" size="10" style="Regular" color="7FB2E5" />
+  </stage>
+  <stage stageid="5fe90cb0-66c2-403c-aad7-e748772ed530" name="Path" type="Data">
+    <loginhibit onsuccess="true" />
+    <display x="465" y="315" w="90" h="30" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">C:\ATTACH.1\attachment</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+</process>
